@@ -1,4 +1,5 @@
 docker/db/
+docker/redis/
 /vendor/
 node_modules/
 npm-debug.log

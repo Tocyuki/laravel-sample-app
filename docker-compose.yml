@@ -18,6 +18,15 @@ services:
     depends_on:
     - php
 
+  redis:
+    image: redis:latest
+    container_name: redis
+    volumes:
+      - ./docker/redis:/data
+    ports:
+      - 6379:6379
+    command: redis-server --appendonly yes
+
   db:
     image: mysql:5.7
     container_name: db-host

@@ -1,8 +1,8 @@
-FROM php:7.2-fpm
+FROM php:7.3-fpm
 COPY php.ini /usr/local/etc/php/
 
 RUN apt-get update \
-  && apt-get install -y zlib1g-dev mariadb-client \
+  && apt-get install -y libzip-dev mariadb-client \
   && docker-php-ext-install zip pdo_mysql
 
 #Composer install
@@ -19,6 +19,6 @@ ENV COMPOSER_HOME /composer
 ENV PATH $PATH:/composer/vendor/bin
 
 
-WORKDIR /var/www
+WORKDIR /var/www/laravel-sample-app
 
 RUN composer global require "laravel/installer"

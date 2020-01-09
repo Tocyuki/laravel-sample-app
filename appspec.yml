@@ -1,0 +1,22 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/html/laravel-sample-app
+hooks:
+  ApplicationStart:
+    - location: scripts/application_stop.sh
+      timeout: 3600
+      runas: root
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 180
+      runas: root
+  AfterInstall:
+    - location: scripts/before_install.sh
+      timeout: 180
+      runas: root
+  ApplicationStart:
+    - location: scripts/application_start.sh
+      timeout: 3600
+      runas: root

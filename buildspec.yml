@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - apk add --no-cache py-pip
+      - pip install docker-compose~=1.23.0
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay&
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+  pre_build:
+    commands:
+      - docker-compose build
+      - docker-compose run php composer install
+      - docker-compose run php cp .env.example .env
+      - docker-compose run php php artisan key:generate
+  build:
+    commands:
+      - docker-compose run php ./vendor/bin/phpunit
+artifacts:
+  type: zip
+  files:
+    - '*'
+  name: laravel-sample-app.zip
